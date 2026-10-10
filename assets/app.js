@@ -78,7 +78,7 @@
         ? `<button class="project-link project-source-trigger" type="button" data-source="${escapeHtml(source)}"><span>查看源代码</span><span aria-hidden="true">↗</span></button>`
         : "";
       const coverMarkup = cover
-        ? `<figure class="project-cover"><img src="${escapeHtml(cover)}" alt="${escapeHtml(project.title || "项目")}封面" loading="lazy"></figure>`
+        ? `<figure class="project-cover"><img src="${escapeHtml(cover)}" alt="${escapeHtml(project.title || "项目")}封面" loading="lazy" decoding="async"></figure>`
         : "";
 
       return `

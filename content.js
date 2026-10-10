@@ -41,7 +41,7 @@ window.PERSONAL_SITE = {
         meta: "Automation · Python · 图像识别",
         description: "基于 OpenCV 模板匹配与 PyAutoGUI 的抖音指定用户自动点赞机器人，支持中文路径截图、高分屏 DPI 感知、高匹配度循环滚动定位并自动点赞。",
         tags: ["Python", "OpenCV", "PyAutoGUI", "图像识别", "自动化"],
-        cover: "./assets/projects/douyin-like-cover.png",
+        cover: "./assets/projects/douyin-like-cover.jpg",
         link: "",
         source: "douyin-like"
       }
