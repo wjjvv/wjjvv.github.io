@@ -1,0 +1,173 @@
+/* Tian Xiwei photo companion: fixed portrait with click and wheel motion */
+.tiwei-mascot {
+  position: fixed;
+  right: clamp(10px, 2.2vw, 30px);
+  bottom: clamp(8px, 1.6vh, 18px);
+  z-index: 190;
+  width: 170px;
+  height: 218px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tiwei-mascot__button {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 30px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.tiwei-mascot__button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent, #d75c36) 72%, white);
+  outline-offset: 4px;
+}
+
+.tiwei-mascot__sticker {
+  position: absolute;
+  right: 4px;
+  bottom: 5px;
+  display: block;
+  width: 160px;
+  height: 192px;
+  transform-origin: 50% 94%;
+  will-change: transform;
+}
+
+.tiwei-mascot__sticker-aura {
+  position: absolute;
+  z-index: -1;
+  inset: 10px -8px -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(111, 190, 226, 0.28), rgba(255, 255, 255, 0) 70%);
+  filter: blur(2px);
+  opacity: 0.72;
+  transform-origin: 50% 58%;
+}
+
+.tiwei-mascot__photo-frame {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  filter:
+    drop-shadow(0 15px 14px rgba(38, 62, 76, 0.18))
+    drop-shadow(0 1px 1px rgba(255, 255, 255, 0.7));
+}
+
+.tiwei-mascot__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: 50% 78%;
+  -webkit-user-drag: none;
+}
+
+.tiwei-mascot.is-tapped .tiwei-mascot__sticker {
+  animation: mascot-tap 680ms cubic-bezier(0.2, 0.9, 0.24, 1) both;
+}
+
+.tiwei-mascot.is-tapped .tiwei-mascot__sticker-aura {
+  animation: mascot-aura-tap 680ms ease both;
+}
+
+.tiwei-mascot.is-scrolling-up .tiwei-mascot__sticker {
+  animation: mascot-scroll-up 640ms cubic-bezier(0.2, 0.9, 0.24, 1) both;
+}
+
+.tiwei-mascot.is-scrolling-up .tiwei-mascot__sticker-aura {
+  animation: mascot-aura-up 640ms ease both;
+}
+
+.tiwei-mascot.is-scrolling-down .tiwei-mascot__sticker {
+  animation: mascot-scroll-down 640ms cubic-bezier(0.2, 0.9, 0.24, 1) both;
+}
+
+.tiwei-mascot.is-scrolling-down .tiwei-mascot__sticker-aura {
+  animation: mascot-aura-down 640ms ease both;
+}
+
+@keyframes mascot-tap {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  18% { transform: translateY(5px) rotate(-1.8deg) scale(0.972, 1.018); }
+  46% { transform: translateY(-9px) rotate(1.6deg) scale(1.022, 0.986); }
+  68% { transform: translateY(-6px) rotate(-0.7deg) scale(1.012, 0.996); }
+  84% { transform: translateY(2px) rotate(0.4deg) scale(0.994, 1.004); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes mascot-scroll-up {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  35% { transform: translateY(-10px) rotate(-4deg) scale(1.018); }
+  68% { transform: translateY(-5px) rotate(2deg) scale(1.008); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes mascot-scroll-down {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  35% { transform: translateY(10px) rotate(4deg) scale(0.982); }
+  68% { transform: translateY(5px) rotate(-2deg) scale(0.992); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes mascot-aura-tap {
+  0%, 100% { opacity: 0.58; transform: scale(0.94); }
+  48% { opacity: 0.94; transform: scale(1.1); }
+}
+
+@keyframes mascot-aura-up {
+  0%, 100% { opacity: 0.58; transform: translateY(0) scale(0.94); }
+  42% { opacity: 0.9; transform: translateY(-7px) scale(1.07); }
+}
+
+@keyframes mascot-aura-down {
+  0%, 100% { opacity: 0.58; transform: translateY(0) scale(0.94); }
+  42% { opacity: 0.9; transform: translateY(7px) scale(1.07); }
+}
+
+@media (max-width: 620px) {
+  .tiwei-mascot {
+    right: 6px;
+    bottom: 8px;
+    width: 132px;
+    height: 170px;
+  }
+
+  .tiwei-mascot__sticker {
+    right: 2px;
+    width: 124px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 420px) {
+  .tiwei-mascot {
+    width: 116px;
+    height: 150px;
+  }
+
+  .tiwei-mascot__sticker {
+    right: 1px;
+    width: 109px;
+    height: 132px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tiwei-mascot *,
+  .tiwei-mascot *::before,
+  .tiwei-mascot *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

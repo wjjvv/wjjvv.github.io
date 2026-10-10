@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f1ea">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="一个简约的个人主页，记录我的经历、作品与联系方式。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="你的名字｜设计开发者">
+  <meta property="og:description" content="把复杂的想法，做成简单好用的产品。">
+  <meta property="og:image" content="./assets/og-cover.svg">
+  <title>你的名字｜设计开发者</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="./assets/tiwei-mascot.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('personal-site-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <script src="./content.js" defer></script>
+  <script src="./assets/app.js" defer></script>
+  <script src="./assets/tiwei-mascot.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+  <div class="page-noise" aria-hidden="true"></div>
+  <div class="ambient ambient-left" aria-hidden="true"></div>
+  <div class="ambient ambient-right" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true" data-content="initials">YN</span>
+        <span class="brand-name" data-content="name">你的名字</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#about">关于</a>
+        <a href="#work">作品</a>
+        <a href="#experience">经历</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" data-theme-toggle aria-label="切换深色模式">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.6 8.6 0 1 0 11.2 11.2Z"></path>
+          </svg>
+        </button>
+        <a class="header-cta" href="#contact">联系我 <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero section-shell" id="top">
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-content="hero.eyebrow">设计开发者 / 独立创作者</span>
+        </p>
+        <h1>
+          你好，我是<br>
+          <span class="hero-name" data-content="name">你的名字</span><span class="accent">.</span>
+        </h1>
+        <p class="hero-lead" data-content="hero.intro">
+          我关注清晰、克制、有温度的体验，用设计和代码把想法变成真正可用的产品。
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" data-email-link href="mailto:hello@example.com">
+            和我聊聊 <span aria-hidden="true">↗</span>
+          </a>
+          <a class="button button-quiet" href="#work">查看作品 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="social-row" data-socials aria-label="社交链接"></div>
+      </div>
+
+      <aside class="portrait-stage" data-reveal aria-label="个人名片">
+        <div class="portrait-card">
+          <div class="portrait-meta">
+            <span data-content="role">设计开发者 / 独立创作者</span>
+            <span aria-hidden="true">↗</span>
+          </div>
+          <div class="portrait-art" aria-hidden="true">
+            <span class="orb orb-large"></span>
+            <span class="orb orb-small"></span>
+            <span class="portrait-initials" data-content="initials">YN</span>
+          </div>
+          <div class="portrait-footer">
+            <span data-content="location">中国 · 可远程合作</span>
+            <span class="availability"><i></i><span data-content="status">开放新合作</span></span>
+          </div>
+        </div>
+        <p class="portrait-note">A small corner of the internet.</p>
+      </aside>
+    </section>
+
+    <section class="section-shell content-section" id="about">
+      <div class="section-heading" data-reveal>
+        <h2 class="section-kicker"><span>01</span> 关于我</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy" data-about-copy data-reveal>
+          <p>我相信，好的作品不需要大声解释。它应该足够清楚，也足够有记忆点。</p>
+          <p>过去几年，我参与过从早期想法到产品落地、再到品牌表达的完整过程。现在，我更喜欢和真诚的人一起，做少而值得的事。</p>
+        </div>
+        <blockquote class="quote-card" data-reveal>
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <p data-content="about.quote">少一点噪音，多一点清晰。</p>
+          <footer><span data-content="name">你的名字</span> 的工作原则</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section-shell content-section" id="work">
+      <div class="section-heading section-heading-wide" data-reveal>
+        <div>
+          <h2 class="section-kicker"><span>02</span> 我的项目</h2>
+        </div>
+        <p class="section-intro" data-content="work.intro">从产品策略、界面设计到前端实现，我享受把模糊的问题一层层变得具体。</p>
+      </div>
+      <div class="project-grid" data-projects></div>
+    </section>
+
+    <section class="section-shell content-section experience-section" id="experience">
+      <div class="section-heading" data-reveal>
+        <h2 class="section-kicker"><span>03</span> 个人经历</h2>
+      </div>
+      <div class="timeline" data-experience data-reveal></div>
+    </section>
+
+    <section class="section-shell contact-section" id="contact">
+      <div class="contact-card" data-reveal>
+        <div>
+          <h2 class="section-kicker section-kicker-light"><span>04</span> 保持联系</h2>
+          <p data-content="contact.intro">无论是产品合作、设计咨询，还是单纯想打个招呼，都欢迎给我写邮件。</p>
+        </div>
+        <div class="contact-actions">
+          <a class="contact-email" data-email-link data-email-text href="mailto:hello@example.com">hello@example.com</a>
+          <div class="contact-buttons">
+            <a class="button button-light" data-email-link href="mailto:hello@example.com">发送邮件 <span aria-hidden="true">↗</span></a>
+            <button class="button button-ghost-light" type="button" data-copy-email data-copy-label>复制邮箱</button>
+          </div>
+          <div class="social-row social-row-light" data-socials aria-label="社交链接"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <p>© <span data-current-year>2026</span> <span data-content="name">你的名字</span>. 保留所有权利。</p>
+    <p>Designed &amp; built with care.</p>
+  </footer>
+
+  <div class="toast" data-toast role="status" aria-live="polite">邮箱已复制</div>
+</body>
+</html>

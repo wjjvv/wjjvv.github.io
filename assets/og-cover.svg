@@ -1,0 +1,24 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f6f0"/>
+      <stop offset="1" stop-color="#e9e5da"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#d75c36" stop-opacity=".92"/>
+      <stop offset="1" stop-color="#d75c36" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" rx="34" fill="url(#background)"/>
+  <circle cx="948" cy="126" r="310" fill="url(#glow)" opacity=".42"/>
+  <circle cx="922" cy="325" r="122" fill="#d75c36"/>
+  <circle cx="1048" cy="188" r="54" fill="#181a17"/>
+  <circle cx="1048" cy="188" r="40" fill="#f8f6f0"/>
+  <g fill="#181a17" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+    <text x="80" y="102" font-size="24" font-weight="700" letter-spacing="4">PERSONAL SITE</text>
+    <text x="80" y="270" font-size="82" font-weight="700" letter-spacing="-3">你的名字</text>
+    <text x="80" y="350" font-size="36" font-weight="400" fill="#686d66">设计开发者 / 独立创作者</text>
+    <text x="80" y="478" font-size="28" font-weight="400" fill="#686d66">把复杂的想法，做成简单好用的产品。</text>
+    <text x="80" y="560" font-size="20" font-weight="600" letter-spacing="2" fill="#d75c36">DESIGN · CODE · CLARITY</text>
+  </g>
+</svg>
