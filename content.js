@@ -33,7 +33,17 @@ window.PERSONAL_SITE = {
         description: "连接 DeepSeek 大模型的聊天伴侣，支持自定义昵称与性格、流式回复、上下文记忆，以及历史会话的本地保存、切换与删除。",
         tags: ["Python", "Streamlit", "DeepSeek", "AI Chat"],
         cover: "./assets/projects/ai-chat-companion-cover.png",
-        link: ""
+        link: "",
+        source: "ai-chat-companion"
+      },
+      {
+        title: "抖音自动点赞",
+        meta: "Automation · Python · 图像识别",
+        description: "基于 OpenCV 模板匹配与 PyAutoGUI 的抖音指定用户自动点赞机器人，支持中文路径截图、高分屏 DPI 感知、高匹配度循环滚动定位并自动点赞。",
+        tags: ["Python", "OpenCV", "PyAutoGUI", "图像识别", "自动化"],
+        cover: "./assets/projects/douyin-like-cover.png",
+        link: "",
+        source: "douyin-like"
       }
     ]
   },

@@ -26,6 +26,7 @@
     })();
   </script>
   <script src="./content.js" defer></script>
+  <script src="./assets/projects-source.js" defer></script>
   <script src="./assets/app.js" defer></script>
   <script src="./assets/tiwei-mascot.js" defer></script>
 </head>
@@ -162,6 +163,26 @@
     <p>© <span data-current-year>2026</span> <span data-content="name">你的名字</span>. 保留所有权利。</p>
     <p>Designed &amp; built with care.</p>
   </footer>
+  <div class="source-modal" data-source-modal hidden>
+    <div class="source-modal-backdrop" data-source-close></div>
+    <section class="source-panel" role="dialog" aria-modal="true" aria-labelledby="source-modal-title">
+      <header class="source-panel-header">
+        <div class="source-panel-heading">
+          <p class="source-panel-kicker">源代码</p>
+          <h2 id="source-modal-title" data-source-title>源代码</h2>
+          <p class="source-panel-meta" data-source-meta></p>
+        </div>
+        <button class="source-close" type="button" data-source-close aria-label="关闭">×</button>
+      </header>
+      <div class="source-panel-actions">
+        <span class="source-panel-lang" data-source-lang>Python</span>
+        <button class="button button-quiet source-copy" type="button" data-source-copy>复制代码</button>
+      </div>
+      <div class="source-code-wrap">
+        <pre class="source-code" data-source-code></pre>
+      </div>
+    </section>
+  </div>
 
   <div class="toast" data-toast role="status" aria-live="polite">邮箱已复制</div>
 </body>

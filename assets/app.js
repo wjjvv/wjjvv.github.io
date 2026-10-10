@@ -70,15 +70,19 @@
       const tags = Array.isArray(project.tags) ? project.tags : [];
       const link = safeUrl(project.link);
       const cover = safeAssetUrl(project.cover);
+      const source = String(project.source || "").trim();
       const linkMarkup = link
         ? `<a class="project-link" href="${escapeHtml(link)}"${/^https?:/i.test(link) ? ' target="_blank" rel="noreferrer"' : ""}><span>查看项目</span><span aria-hidden="true">↗</span></a>`
+        : "";
+      const sourceMarkup = source
+        ? `<button class="project-link project-source-trigger" type="button" data-source="${escapeHtml(source)}"><span>查看源代码</span><span aria-hidden="true">↗</span></button>`
         : "";
       const coverMarkup = cover
         ? `<figure class="project-cover"><img src="${escapeHtml(cover)}" alt="${escapeHtml(project.title || "项目")}封面" loading="lazy"></figure>`
         : "";
 
       return `
-        <article class="project-card${cover ? " has-cover" : ""}" data-reveal>
+        <article class="project-card${cover ? " has-cover" : ""}${source ? " has-source" : ""}" data-reveal${source ? ` data-source="${escapeHtml(source)}" tabindex="0" role="button" aria-label="查看源代码：${escapeHtml(project.title || "项目")}"` : ""}>
           ${coverMarkup}
           <div class="project-body">
             <div class="project-top">
@@ -89,6 +93,7 @@
             <p>${escapeHtml(project.description || "")}</p>
             <ul class="tag-list">${tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
             ${linkMarkup}
+            ${sourceMarkup}
           </div>
         </article>
       `;
@@ -337,6 +342,109 @@
     });
   }
 
+  function setupSourceModal() {
+    const modal = document.querySelector("[data-source-modal]");
+    if (!modal) return;
+
+    let currentCode = "";
+
+    const fallbackCopy = (value) => {
+      const textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    };
+
+    const open = (sourceId) => {
+      const sources = window.PROJECT_SOURCES || {};
+      const code = typeof sources[sourceId] === "string" ? sources[sourceId] : "";
+      if (!code) return;
+
+      const projects = getValue("work.projects", []);
+      const project = projects.find((item) => String(item.source || "").trim() === sourceId) || {};
+
+      modal.querySelector("[data-source-title]").textContent = project.title
+        ? `${project.title} · 源代码`
+        : "源代码";
+      modal.querySelector("[data-source-meta]").textContent = project.meta || "";
+      modal.querySelector("[data-source-lang]").textContent =
+        (project.tags && project.tags[0]) || "Python";
+
+      const codeElement = modal.querySelector("[data-source-code]");
+      codeElement.replaceChildren();
+      const lines = code.replace(/\r/g, "").replace(/\n+$/, "").split("\n");
+      lines.forEach((line, index) => {
+        const row = document.createElement("span");
+        row.className = "source-line";
+        const number = document.createElement("span");
+        number.className = "source-line-num";
+        number.setAttribute("aria-hidden", "true");
+        number.textContent = String(index + 1);
+        const text = document.createElement("span");
+        text.className = "source-line-text";
+        text.textContent = line || " ";
+        row.append(number, text);
+        codeElement.appendChild(row);
+      });
+
+      currentCode = code;
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      const closeButton = modal.querySelector(".source-close");
+      if (closeButton) closeButton.focus();
+    };
+
+    const close = () => {
+      modal.hidden = true;
+      currentCode = "";
+      document.body.style.overflow = "";
+    };
+
+    modal.querySelectorAll("[data-source-close]").forEach((element) => {
+      element.addEventListener("click", close);
+    });
+
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-source]");
+      if (trigger) open(trigger.dataset.source);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const trigger = event.target.closest("[data-source]");
+      if (!trigger || trigger.tagName === "BUTTON") return;
+      event.preventDefault();
+      open(trigger.dataset.source);
+    });
+
+    const copyButton = modal.querySelector("[data-source-copy]");
+    if (copyButton) {
+      copyButton.addEventListener("click", async () => {
+        if (!currentCode) return;
+        const originalText = copyButton.textContent;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(currentCode);
+          } else {
+            fallbackCopy(currentCode);
+          }
+        } catch (error) {
+          fallbackCopy(currentCode);
+        }
+        copyButton.textContent = "已复制";
+        window.setTimeout(() => { copyButton.textContent = originalText; }, 1600);
+      });
+    }
+  }
   function setCurrentYear() {
     document.querySelectorAll("[data-current-year]").forEach((element) => {
       element.textContent = String(new Date().getFullYear());
@@ -353,5 +461,6 @@
   setupHeader();
   setupReveal();
   setupCopyButtons();
+  setupSourceModal();
   setCurrentYear();
 })();
