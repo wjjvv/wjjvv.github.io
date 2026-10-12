@@ -25,7 +25,7 @@ window.PERSONAL_SITE = {
   },
 
   work: {
-    intro: "一个基于 Streamlit 与 DeepSeek API 构建的 AI 聊天机器人项目。",
+    intro: "",
     projects: [
       {
         title: "AI 聊天伴侣",

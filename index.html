@@ -13,6 +13,7 @@
   <title>你的名字｜设计开发者</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="./assets/notes.css">
   <link rel="stylesheet" href="./assets/tiwei-mascot.css">
   <script>
     (function () {
@@ -27,7 +28,9 @@
   </script>
   <script src="./content.js" defer></script>
   <script src="./assets/projects-source.js" defer></script>
+  <script src="./assets/notes-data.js" defer></script>
   <script src="./assets/app.js" defer></script>
+  <script src="./assets/notes.js" defer></script>
   <script src="./assets/tiwei-mascot.js" defer></script>
 </head>
 <body>
@@ -46,6 +49,7 @@
       <nav class="site-nav" aria-label="主导航">
         <a href="#about">关于</a>
         <a href="#work">作品</a>
+        <a href="#notes">笔记</a>
         <a href="#experience">经历</a>
       </nav>
 
@@ -129,14 +133,31 @@
         <div>
           <h2 class="section-kicker"><span>02</span> 我的项目</h2>
         </div>
-        <p class="section-intro" data-content="work.intro">从产品策略、界面设计到前端实现，我享受把模糊的问题一层层变得具体。</p>
+        <p class="section-intro" data-content="work.intro"></p>
       </div>
       <div class="project-grid" data-projects></div>
     </section>
 
+    <section class="section-shell content-section notes-section" id="notes">
+      <div class="section-heading section-heading-wide" data-reveal>
+        <div>
+          <h2 class="section-kicker"><span>03</span> 学习笔记</h2>
+        </div>
+        <p class="section-intro">学习过程中整理的笔记，点击居中的卡片可以阅读全文。</p>
+      </div>
+      <div class="notes-flow" data-reveal>
+        <div class="notes-stage" data-notes-stage aria-label="学习笔记卡片"></div>
+        <div class="notes-controls">
+          <button class="notes-arrow" type="button" data-notes-prev aria-label="上一篇"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div class="notes-dots" data-notes-dots></div>
+          <button class="notes-arrow" type="button" data-notes-next aria-label="下一篇"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
     <section class="section-shell content-section experience-section" id="experience">
       <div class="section-heading" data-reveal>
-        <h2 class="section-kicker"><span>03</span> 个人经历</h2>
+        <h2 class="section-kicker"><span>04</span> 个人经历</h2>
       </div>
       <div class="timeline" data-experience data-reveal></div>
     </section>
@@ -144,7 +165,7 @@
     <section class="section-shell contact-section" id="contact">
       <div class="contact-card" data-reveal>
         <div>
-          <h2 class="section-kicker section-kicker-light"><span>04</span> 保持联系</h2>
+          <h2 class="section-kicker section-kicker-light"><span>05</span> 保持联系</h2>
           <p data-content="contact.intro">无论是产品合作、设计咨询，还是单纯想打个招呼，都欢迎给我写邮件。</p>
         </div>
         <div class="contact-actions">
@@ -181,6 +202,20 @@
       <div class="source-code-wrap">
         <pre class="source-code" data-source-code></pre>
       </div>
+    </section>
+  </div>
+
+  <div class="note-modal" data-note-modal hidden>
+    <div class="note-modal-backdrop" data-note-close></div>
+    <section class="note-panel" role="dialog" aria-modal="true" aria-labelledby="note-modal-title">
+      <header class="note-panel-header">
+        <div>
+          <p class="note-panel-kicker" data-note-meta></p>
+          <h2 id="note-modal-title" data-note-title></h2>
+        </div>
+        <button class="note-close" type="button" data-note-close aria-label="关闭">×</button>
+      </header>
+      <div class="note-content" data-note-content></div>
     </section>
   </div>
 

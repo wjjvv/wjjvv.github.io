@@ -1,0 +1,593 @@
+/* 学习笔记 · 扇形封面流卡片带 */
+
+.notes-section .section-intro {
+  max-width: 420px;
+}
+
+.notes-flow {
+  margin-top: 20px;
+}
+
+.notes-stage {
+  position: relative;
+  height: 420px;
+  perspective: 1500px;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* ---------- 卡片 ---------- */
+
+.note-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 324px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-medium);
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-small);
+  overflow: hidden;
+  cursor: pointer;
+  transform:
+    translateX(calc(-50% + var(--tx, 0px)))
+    translateY(var(--lift, 0px))
+    rotateY(var(--ry, 0deg))
+    scale(var(--sc, 1));
+  filter: brightness(var(--br, 1));
+  opacity: var(--op, 1);
+  transition:
+    transform 620ms var(--ease),
+    filter 620ms var(--ease),
+    opacity 620ms var(--ease),
+    box-shadow 320ms var(--ease),
+    border-color 320ms var(--ease),
+    background-color 320ms var(--ease);
+  will-change: transform;
+}
+
+/* 悬停反馈：边框高亮 + 阴影加深 + 微微上浮 + 提亮 */
+.note-card:not(.is-hidden-card):hover {
+  --lift: -8px;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow:
+    0 4px 12px rgba(32, 34, 29, 0.06),
+    0 24px 56px rgba(32, 34, 29, 0.16);
+}
+
+.note-card:not(.is-center):not(.is-hidden-card):hover {
+  filter: brightness(1);
+}
+
+.note-card.is-center {
+  box-shadow: var(--shadow);
+  border-color: var(--line-strong);
+  cursor: zoom-in;
+}
+
+.note-card.is-center:hover {
+  --lift: -10px;
+  border-color: var(--accent);
+  box-shadow:
+    0 6px 16px rgba(32, 34, 29, 0.07),
+    0 32px 72px rgba(32, 34, 29, 0.2);
+}
+
+.note-card.is-hidden-card {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.note-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- 卡片封面 ---------- */
+
+.note-card-cover {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 150px;
+  padding: 20px 22px;
+  background:
+    radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 56%),
+    radial-gradient(circle at 8% 96%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 52%),
+    color-mix(in srgb, var(--accent-soft) 52%, var(--surface));
+  transition: background 320ms var(--ease);
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-cover {
+  background:
+    radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--accent) 36%, transparent), transparent 58%),
+    radial-gradient(circle at 8% 96%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 54%),
+    color-mix(in srgb, var(--accent-soft) 62%, var(--surface));
+}
+
+/* 封面装饰圆环 */
+.note-card-cover::before,
+.note-card-cover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  transition: transform 420ms var(--ease), border-color 320ms var(--ease);
+  pointer-events: none;
+}
+
+.note-card-cover::before {
+  width: 96px;
+  height: 96px;
+  top: -38px;
+  right: -22px;
+}
+
+.note-card-cover::after {
+  width: 52px;
+  height: 52px;
+  top: 8px;
+  right: 34px;
+  border-style: dashed;
+  opacity: 0.75;
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-cover::before {
+  transform: scale(1.12) translate(-4px, 4px);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-cover::after {
+  transform: rotate(40deg) scale(1.08);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.note-card-index {
+  font-family: var(--display);
+  font-size: 46px;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: color-mix(in srgb, var(--accent) 82%, var(--text));
+  transition: transform 320ms var(--ease);
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-index {
+  transform: translateY(-2px);
+}
+
+.note-card-hint {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--accent) 86%, var(--text));
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 320ms var(--ease), transform 320ms var(--ease), background 320ms var(--ease);
+}
+
+.note-card-hint svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 320ms var(--ease);
+}
+
+.note-card.is-center .note-card-hint {
+  opacity: 1;
+  transform: none;
+}
+
+.note-card.is-center:hover .note-card-hint {
+  background: var(--surface-strong);
+}
+
+.note-card.is-center:hover .note-card-hint svg {
+  transform: translate(2px, -2px);
+}
+
+/* ---------- 卡片正文 ---------- */
+
+.note-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px 24px 20px;
+}
+
+.note-card-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+}
+
+.note-card-meta svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+.note-card-body h3 {
+  margin: 0 0 10px;
+  font-size: 25px;
+  letter-spacing: -0.03em;
+}
+
+.note-card-body > p {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.note-card .tag-list {
+  margin-top: auto;
+}
+
+.note-card .tag-list li {
+  transition: border-color 280ms var(--ease), color 280ms var(--ease), background 280ms var(--ease);
+}
+
+.note-card:not(.is-hidden-card):hover .tag-list li {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: color-mix(in srgb, var(--accent) 80%, var(--text));
+  background: color-mix(in srgb, var(--accent-soft) 26%, transparent);
+}
+
+/* 底部阅读入口 */
+.note-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--soft);
+  transition: color 300ms var(--ease), border-color 300ms var(--ease);
+}
+
+.note-card-footer svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 320ms var(--ease);
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-footer {
+  color: var(--accent);
+  border-top-color: color-mix(in srgb, var(--accent) 32%, var(--line));
+}
+
+.note-card:not(.is-hidden-card):hover .note-card-footer svg {
+  transform: translateX(4px);
+}
+
+/* ---------- 控制器 ---------- */
+
+.notes-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  margin-top: 34px;
+}
+
+.notes-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    border-color 280ms var(--ease),
+    color 280ms var(--ease),
+    background 280ms var(--ease),
+    transform 280ms var(--ease),
+    box-shadow 280ms var(--ease);
+}
+
+.notes-arrow svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 280ms var(--ease);
+}
+
+.notes-arrow:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+.notes-arrow:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+.notes-arrow[data-notes-prev]:hover svg {
+  transform: translateX(-2px);
+}
+
+.notes-arrow[data-notes-next]:hover svg {
+  transform: translateX(2px);
+}
+
+.notes-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.notes-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--line-strong);
+  cursor: pointer;
+  transition:
+    width 320ms var(--ease),
+    background 320ms var(--ease),
+    transform 320ms var(--ease);
+}
+
+.notes-dot:hover {
+  background: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
+  transform: scale(1.25);
+}
+
+.notes-dot.is-active {
+  width: 22px;
+  background: var(--accent);
+}
+
+/* ---------- 阅读弹层 ---------- */
+
+.note-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.note-modal[hidden] {
+  display: none;
+}
+
+.note-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 18, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.note-panel {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: min(82vh, 860px);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-medium);
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.note-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 30px 18px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 96% -30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 55%),
+    var(--surface-strong);
+}
+
+.note-panel-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 5px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.note-panel-header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.note-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 280ms var(--ease), color 280ms var(--ease), background 280ms var(--ease), transform 280ms var(--ease);
+}
+
+.note-close:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.note-content {
+  padding: 24px 30px 34px;
+  overflow-y: auto;
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+
+.note-content h1,
+.note-content h2,
+.note-content h3,
+.note-content h4 {
+  margin: 1.4em 0 0.5em;
+  letter-spacing: -0.02em;
+}
+
+.note-content h1 { font-size: 22px; }
+.note-content h2 { font-size: 19px; }
+.note-content h3 { font-size: 16.5px; }
+.note-content h4 { font-size: 15px; }
+
+.note-content > :first-child {
+  margin-top: 0;
+}
+
+.note-content p {
+  margin: 0.5em 0;
+}
+
+.note-content ul,
+.note-content ol {
+  margin: 0.4em 0;
+  padding-left: 1.4em;
+}
+
+.note-content li {
+  margin: 0.18em 0;
+}
+
+.note-content pre {
+  margin: 0.8em 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-small);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.note-content code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.note-content p code,
+.note-content li code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--accent-soft) 45%, transparent);
+}
+
+.note-content table {
+  width: 100%;
+  margin: 0.8em 0;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.note-content th,
+.note-content td {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.note-content th {
+  background: var(--surface);
+  font-weight: 500;
+}
+
+.note-content hr {
+  margin: 1.2em 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 760px) {
+  .notes-stage {
+    height: 380px;
+  }
+
+  .note-card {
+    width: min(284px, 78vw);
+  }
+
+  .note-card-cover {
+    height: 122px;
+  }
+
+  .note-card-index {
+    font-size: 38px;
+  }
+
+  .note-card-body {
+    padding: 18px 20px 16px;
+  }
+
+  .note-card-body h3 {
+    font-size: 22px;
+  }
+
+  .notes-controls {
+    gap: 18px;
+    margin-top: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-card,
+  .note-card-cover,
+  .note-card-cover::before,
+  .note-card-cover::after,
+  .note-card-index,
+  .note-card-hint,
+  .note-card-hint svg,
+  .note-card-footer,
+  .note-card-footer svg,
+  .notes-arrow,
+  .notes-arrow svg,
+  .notes-dot,
+  .note-close {
+    transition: none;
+  }
+}
