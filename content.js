@@ -18,7 +18,7 @@ window.PERSONAL_SITE = {
 
   about: {
     paragraphs: [
-      "08年本科在读，会python，cpp编程语言，git操作，算法学习中",
+      "08年本科在读，会python，cpp编程语言，git操作。AI Agent开发，langchain框架学习中",
       ""
     ],
     quote: "今天不努力明天见不到vivian。"
